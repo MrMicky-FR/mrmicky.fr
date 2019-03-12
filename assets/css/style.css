@@ -106,27 +106,56 @@ small, .small {
     display: inline-block;
     vertical-align: -0.2em;
     height: 1em;
+    width: 1em;
 }
 
 .svg-icon:before {
     display: inline-block;
-    content: ' ';
-    background-image: url('../svg/twitter.svg');
-    background-size: 18px 18px;
-    height: 18px;
-    width: 18px;
+    vertical-align: -0.125em;
+    height: 1em;
+    width: 1em;
+    content: '';
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    color: #fff;
+}
+
+.svg-icon:before svg {
+    fill: #f00;
+}
+
+.container .icon-dev:before {
+    background-image: url('../svg/code.svg');
+    width: 1.25em;
+}
+
+.container .btn-devinfinity:before {
+    background-image: url('../svg/infinity.svg');
+    width: 1.25em;
 }
 
 .container .btn-devinfinity:hover {
     background: #007bff;
 }
 
+.container .btn-twitter:before {
+    background-image: url('../svg/twitter.svg');
+}
+
 .container .btn-twitter:hover {
     background: #1da1f2;
 }
 
+.container .btn-spigot:before {
+    background-image: url('../svg/bitbucket.svg');
+}
+
 .container .btn-spigot:hover {
     background: #ed8106;
+}
+
+.container .btn-github:before {
+    background-image: url('../svg/github.svg');
 }
 
 .container .btn-github:hover {
