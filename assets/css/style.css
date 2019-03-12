@@ -1,0 +1,146 @@
+/*
+ * MrMicky.fr - 2019
+ */
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+    color: #fff;
+    background: linear-gradient(to bottom right, #1f8ef2, #981ceb);
+    font-family: 'Source Sans Pro', sans-serif;
+    margin: 0;
+    font-weight: 400;
+}
+
+main {
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    background-color: transparent;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+small, .small {
+    font-size: 80%;
+    font-weight: 400;
+}
+
+.content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    text-align: center;
+    z-index: 100;
+}
+
+.container h1 {
+    font-size: 3.0rem;
+    font-weight: 700;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.container h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.container .logo {
+    height: 200px;
+    width: 200px;
+    transition: all 0.3s ease;
+}
+
+.container .logo:hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.container a {
+    display: inline-block;
+    background: transparent;
+    font-size: 1.1rem;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 10px 15px;
+    margin: 5px;
+    transition: all 0.25s ease-in-out;
+}
+
+.container a:hover {
+    background: #0000c8;
+    border-color: transparent;
+}
+
+@media (max-width: 650px) {
+    .container a {
+        display: block;
+    }
+}
+
+.svg {
+    display: inline-block;
+    vertical-align: -0.2em;
+    height: 1em;
+}
+
+.svg-icon:before {
+    display: inline-block;
+    content: ' ';
+    background-image: url('../svg/twitter.svg');
+    background-size: 18px 18px;
+    height: 18px;
+    width: 18px;
+}
+
+.container .btn-devinfinity:hover {
+    background: #007bff;
+}
+
+.container .btn-twitter:hover {
+    background: #1da1f2;
+}
+
+.container .btn-spigot:hover {
+    background: #ed8106;
+}
+
+.container .btn-github:hover {
+    background: #696969;
+}
+
+.container .btn-discord:hover {
+    background: #7289DA;
+}
+
+#particles-js {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
