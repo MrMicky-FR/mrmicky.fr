@@ -61,18 +61,24 @@ small, .small {
     font-weight: 700;
     margin-top: 5px;
     margin-bottom: 5px;
+    -webkit-animation: fadeInLeft 1s 0.2s ease both;
+    animation: fadeInLeft 1s 0.2s ease both;
 }
 
 .container h2 {
     font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: 10px;
+    -webkit-animation: fadeInLeft 1s 0.3s ease both;
+    animation: fadeInLeft 1s 0.3s ease both;
 }
 
 .container .logo {
     height: 200px;
     width: 200px;
     transition: all 0.3s ease;
+    -webkit-animation: bounceInDown 1s 1.25s ease both;
+    animation: bounceInDown 1s 1.25s ease both;
 }
 
 .container .logo:hover {
@@ -80,18 +86,20 @@ small, .small {
     transform: scale(1.1);
 }
 
-.container a {
+.container .btn {
     display: inline-block;
     background: transparent;
     font-size: 1.1rem;
     color: #fff;
-    border: 1px solid #fff;
+    border: 2px solid #fff;
     padding: 10px 15px;
     margin: 5px;
     transition: all 0.25s ease-in-out;
+    -webkit-animation: fadeInUp 1s 1s ease both;
+    animation: fadeInUp 1s 1s ease both;
 }
 
-.container a:hover {
+.container .btn:hover {
     background: #0000c8;
     border-color: transparent;
 }
@@ -134,12 +142,20 @@ small, .small {
     width: 1.25em;
 }
 
+.container .btn-devinfinity {
+    animation-delay: 0.8s;
+}
+
 .container .btn-devinfinity:hover {
     background: #007bff;
 }
 
 .container .btn-twitter:before {
     background-image: url('../svg/twitter.svg');
+}
+
+.container .btn-twitter {
+    animation-delay: 0.9s;
 }
 
 .container .btn-twitter:hover {
@@ -150,12 +166,20 @@ small, .small {
     background-image: url('../svg/bitbucket.svg');
 }
 
+.container .btn-spigot {
+    animation-delay: 1.0s;
+}
+
 .container .btn-spigot:hover {
     background: #ed8106;
 }
 
 .container .btn-github:before {
     background-image: url('../svg/github.svg');
+}
+
+.container .btn-github {
+    animation-delay: 1.1s;
 }
 
 .container .btn-github:hover {
