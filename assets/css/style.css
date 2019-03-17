@@ -61,24 +61,24 @@ small, .small {
     font-weight: 700;
     margin-top: 5px;
     margin-bottom: 5px;
-    -webkit-animation: fadeInLeft 1s 0.2s ease both;
-    animation: fadeInLeft 1s 0.2s ease both;
+    -webkit-animation: fadeInLeft 1s 0.2s ease backwards;
+    animation: fadeInLeft 1s 0.2s ease backwards;
 }
 
 .container h2 {
     font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: 10px;
-    -webkit-animation: fadeInLeft 1s 0.3s ease both;
-    animation: fadeInLeft 1s 0.3s ease both;
+    -webkit-animation: fadeInLeft 1s 0.3s ease backwards;
+    animation: fadeInLeft 1s 0.3s ease backwards;
 }
 
 .container .logo {
     height: 200px;
     width: 200px;
     transition: all 0.3s ease;
-    -webkit-animation: bounceInDown 1s 1.25s ease both;
-    animation: bounceInDown 1s 1.25s ease both;
+    -webkit-animation: bounceInDown 1s 1.25s ease backwards;
+    animation: bounceInDown 1s 1.25s ease backwards;
 }
 
 .container .logo:hover {
@@ -95,8 +95,8 @@ small, .small {
     padding: 10px 15px;
     margin: 5px;
     transition: all 0.25s ease-in-out;
-    -webkit-animation: fadeInUp 1s 1s ease both;
-    animation: fadeInUp 1s 1s ease both;
+    -webkit-animation: fadeInUp 1s 1s ease backwards;
+    animation: fadeInUp 1s 1s ease backwards;
 }
 
 .container .btn:hover {
