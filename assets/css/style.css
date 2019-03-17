@@ -105,7 +105,7 @@ small, .small {
 }
 
 @media (max-width: 650px) {
-    .container a {
+    .container .btn {
         display: block;
     }
 }
