@@ -1,7 +1,8 @@
 /*
  * MrMicky.fr - 2019
  */
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
 }
@@ -34,12 +35,18 @@ img {
     border-style: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin-top: 0;
     margin-bottom: 0.5rem;
 }
 
-small, .small {
+small,
+.small {
     font-size: 80%;
     font-weight: 400;
 }
@@ -56,7 +63,7 @@ small, .small {
     z-index: 100;
 }
 
-.container h1 {
+h1 {
     font-size: 3.0rem;
     font-weight: 700;
     margin-top: 5px;
@@ -65,7 +72,7 @@ small, .small {
     animation: fadeInLeft 1s 0.2s ease backwards;
 }
 
-.container h2 {
+h2 {
     font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: 10px;
@@ -73,7 +80,7 @@ small, .small {
     animation: fadeInLeft 1s 0.3s ease backwards;
 }
 
-.container .logo {
+.logo {
     height: 200px;
     width: 200px;
     transition: all 0.3s ease;
@@ -81,12 +88,12 @@ small, .small {
     animation: bounceInDown 1s 1.25s ease backwards;
 }
 
-.container .logo:hover {
+.logo:hover {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
 
-.container .btn {
+.btn {
     display: inline-block;
     background: transparent;
     font-size: 1.1rem;
@@ -99,13 +106,13 @@ small, .small {
     animation: fadeInUp 1s 1s ease backwards;
 }
 
-.container .btn:hover {
+.btn:hover {
     background: #0000c8;
     border-color: transparent;
 }
 
 @media (max-width: 650px) {
-    .container .btn {
+    .btn {
         display: block;
     }
 }
@@ -132,61 +139,61 @@ small, .small {
     fill: #f00;
 }
 
-.container .icon-dev:before {
+.icon-dev:before {
     background-image: url('../svg/code.svg');
     width: 1.25em;
 }
 
-.container .btn-devinfinity:before {
+.btn-devinfinity:before {
     background-image: url('../svg/infinity.svg');
     width: 1.25em;
 }
 
-.container .btn-devinfinity {
+.btn-devinfinity {
     animation-delay: 0.8s;
 }
 
-.container .btn-devinfinity:hover {
+.btn-devinfinity:hover {
     background: #007bff;
 }
 
-.container .btn-twitter:before {
+.btn-twitter:before {
     background-image: url('../svg/twitter.svg');
 }
 
-.container .btn-twitter {
+.btn-twitter {
     animation-delay: 0.9s;
 }
 
-.container .btn-twitter:hover {
+.btn-twitter:hover {
     background: #1da1f2;
 }
 
-.container .btn-spigot:before {
+.btn-spigot:before {
     background-image: url('../svg/bitbucket.svg');
 }
 
-.container .btn-spigot {
+.btn-spigot {
     animation-delay: 1.0s;
 }
 
-.container .btn-spigot:hover {
+.btn-spigot:hover {
     background: #ed8106;
 }
 
-.container .btn-github:before {
+.btn-github:before {
     background-image: url('../svg/github.svg');
 }
 
-.container .btn-github {
+.btn-github {
     animation-delay: 1.1s;
 }
 
-.container .btn-github:hover {
+.btn-github:hover {
     background: #696969;
 }
 
-.container .btn-discord:hover {
+.btn-discord:hover {
     background: #7289DA;
 }
 
