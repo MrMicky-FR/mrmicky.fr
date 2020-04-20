@@ -1,5 +1,5 @@
 /*
- * MrMicky.fr - 2019
+ * MrMicky.fr 2019
  */
 html,
 body {
@@ -10,14 +10,13 @@ body {
 html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
+    margin: 0;
     color: #fff;
     background: linear-gradient(to bottom right, #1f8ef2, #981ceb);
     font-family: 'Source Sans Pro', sans-serif;
-    margin: 0;
     font-weight: 400;
 }
 
@@ -31,7 +30,8 @@ a {
 }
 
 img {
-    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
     border-style: none;
 }
 
@@ -64,10 +64,8 @@ small,
 }
 
 h1 {
-    font-size: 3.0rem;
+    font-size: 3rem;
     font-weight: 700;
-    margin-top: 5px;
-    margin-bottom: 5px;
     -webkit-animation: fadeInLeft 1s 0.2s ease backwards;
     animation: fadeInLeft 1s 0.2s ease backwards;
 }
@@ -75,13 +73,11 @@ h1 {
 h2 {
     font-size: 1.5rem;
     font-weight: 400;
-    margin-bottom: 10px;
     -webkit-animation: fadeInLeft 1s 0.3s ease backwards;
     animation: fadeInLeft 1s 0.3s ease backwards;
 }
 
 .logo {
-    height: 200px;
     width: 200px;
     transition: all 0.3s ease;
     -webkit-animation: bounceInDown 1s 1.25s ease backwards;
@@ -133,15 +129,6 @@ h2 {
     background-repeat: no-repeat;
     background-position: 0 0;
     color: #fff;
-}
-
-.svg-icon:before svg {
-    fill: #f00;
-}
-
-.icon-dev:before {
-    background-image: url('../svg/code.svg');
-    width: 1.25em;
 }
 
 .btn-devinfinity:before {
