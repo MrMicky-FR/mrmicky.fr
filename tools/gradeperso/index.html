@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Grade Perso | MrMicky</title>
+
+    <meta name="lang-locale" content="fr">
+    <meta name="keywords" content="Grade perso, Rang custom, FunCraft">
+    <meta name="description" content="Petit outil permettant de simplifier les changements de titre pour les grades personnalisés sur FunCraft">
+    <meta name="author" content="MrMicky">
+    <meta name="theme-color" content="#ff0000">
+
+    <meta property="og:title" content="Grade perso | FunCraft">
+    <meta property="og:site_name" content="MrMicky">
+    <meta property="og:description" content="Petit outil permettant de simplifier les changements de titre pour les grades personnalisés sur FunCraft">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mrmicky.fr/tools/gradeperso">
+    <meta property="og:image" content="https://mrmicky.fr/assets/imag/logo.png">
+    <meta property="og:locale" content="fr_FR">
+
+    <link rel="icon" href="https://mrmicky.fr/assets/img/logo.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+    <script src="script.js" defer></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114924407-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'UA-114924407-1');
+    </script>
+</head>
+<body>
+
+<div class="container" id="app" v-cloak>
+    <h1>Grade perso | FunCraft</h1>
+
+    <div class="btn-toolbar color-selectors mb-1" role="toolbar">
+        <div class="btn-group flex-wrap mr-2" role="group">
+            <button v-for="(name, code) in colors" @click="addColor(code)" type="button" class="btn btn-light" :title="name" data-toggle="tooltip">
+                <span class="color-selector" :class="'mc-background-' + code"></span>
+            </button>
+        </div>
+
+        <div class="btn-group mr-2" role="group">
+            <button @click="rainbowify" type="button" class="btn btn-light" title="Rainbow" data-toggle="tooltip">
+                <span class="rainbow"></span>
+            </button>
+        </div>
+
+        <div class="btn-group" role="group">
+            <button @click="clearColors" type="button" class="btn btn-light text-danger" title="Effacer les couleurs" data-toggle="tooltip">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="2" y2="22"/>
+                    <line x1="2" y1="2" x2="22" y2="22"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="form mb-3">
+        <div class="form-group mb-1">
+            <label for="prefix-input">Titre:</label>
+            <input id="prefix-input" ref="prefixInput" class="form-control" maxlength="30" placeholder="&dExemple&a" v-model="title">
+        </div>
+        <div class="form-group">
+            <label for="name-input">Pseudo <small>(sans couleurs)</small>:</label>
+            <input id="name-input" class="form-control" maxlength="30" placeholder="Pseudo" v-model="name">
+        </div>
+    </div>
+
+    <label for="preview">Aperçu en jeu:</label>
+    <div id="preview" class="preview mb-3 px-3 py-2 rounded" v-html="titleRender"></div>
+
+    <label for="result">Vérification:</label>
+
+    <div class="list-group mb-1">
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+                Longueur du titre:
+                <span class="badge badge-pill" :class="badgeColor(validLength)">{{ stripedTitle.length }}</span>
+            </div>
+
+            <ul class="mb-0">
+                <li>Maximum 13 caractères par titre (ne prend pas en compte les couleurs et le pseudo).</li>
+            </ul>
+        </div>
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+                Nombre de majuscules:
+                <span class="badge badge-pill" :class="badgeColor(validUpperCount)">{{ upperCount }}</span>
+            </div>
+
+            <ul class="mb-0">
+                <li>Maximum 4 majuscules par titre.</li>
+            </ul>
+        </div>
+
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+                Caractères autorisés:
+                <span class="badge badge-pill" :class="badgeColor(validChars)">{{ validChars ? 'Oui' : 'Non' }}</span>
+            </div>
+
+            <ul class="mb-0">
+                <li>Les seuls caractères autorisés sont les lettres de A à Z.</li>
+                <li>Les accents sont autorisés uniquement si le mot en contient de base, comme par exemple ‘‘écureuil’’.</li>
+                <li>Les seuls symboles autorisés sont les <code>+</code> ou <code>++</code>, mais uniquement à la fin d’un titre.</li>
+            </ul>
+        </div>
+
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+                Couleurs autorisées:
+                <span class="badge badge-pill" :class="badgeColor(validColors)">{{ validColors ? 'Oui' : 'Non' }}</span>
+            </div>
+
+            <ul class="mb-0">
+                <li>Le rouge foncé et le rouge clair sont interdits dans le pseudo, mais ils sont autorisés s’ils ne dépassent pas 50% du titre.</li>
+            </ul>
+        </div>
+
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+                Titre autorisé:
+                <span>
+                    <span v-show="validText >= 0" class="badge badge-pill" :class="badgeColor(validText)">{{ validText ? 'Oui' : 'Non' }}</span>
+                    <span v-show="validText < 0" class="badge badge-secondary badge-pill cursor-help" data-toggle="tooltip" title="Actuellement cette vérification n’est pas prise en charge pour le mot entré">?</span>
+                </span>
+            </div>
+
+            <ul class="mb-0">
+                <li>Le titre ne doit pas porter à confusion avec d’autres grades (sauf ‘‘Héros’’ en vert clair), et ne doit pas faire référence à des insultes ou du cheat.</li>
+                <li>Le titre ne peut pas être le nom d'une équipe d'un mini-jeu comme par exemple ‘‘Rouge’’, ‘‘Bleu’’, ‘‘Zombie’’, etc...</li>
+            </ul>
+        </div>
+    </div>
+
+    <p class="text-danger">
+        Le système de vérification ci-dessus n’est en aucun cas officiel et est simplement à but informatif.
+        Un membre du staff se réserve le droit de refuser un titre même s’il est considéré comme valide selon cet outil.
+    </p>
+
+    <div v-if="hasDuplicatesColor" class="alert alert-warning" role="alert">
+        Oups, il y a des couleurs en double dans le titre, mais ce n’est pas un problème elles ont automatiquement été retirées dans le résultat !
+    </div>
+
+    <h2>Résultat:</h2>
+    <div class="input-group mb-3">
+        <input id="result" ref="result" type="text" class="form-control" :value="titleResult" readonly>
+        <div class="input-group-append">
+            <button @click="copyResult" class="btn copy-clipboard" :class="validTitle ? 'btn-info' : 'btn-warning'" :disabled="!validTitle" id="copyResult" type="button" data-toggle="tooltip" data-copy-target="result" :title="validTitle ? 'Copier' : 'Le titre n\'est pas valide'">Copier</button>
+        </div>
+    </div>
+
+    <p>Réalisé par MrMicky avec la participation de SkyWarZzeur. Si vous rencontrez un problème, n’hésitez pas à nous le signaler.</p>
+</div>
+
+<div id="loader">
+    <div class="d-flex align-items-center justify-content-center flex-column h-100">
+        <div class="spinner-grow mb-3" role="status"></div>
+
+        <h3>Chargement...</h3>
+
+        <noscript>
+            <div class="alert alert-danger" role="alert">
+                Attention, le Javascript est désactivé sur votre navigateur, le site ne pourra pas fonctionner !
+            </div>
+        </noscript>
+    </div>
+</div>
+
+</body>
+</html>
