@@ -48,42 +48,54 @@
 </head>
 <body>
 
-<div class="container" id="app" v-cloak>
-    <h1>Grade perso | FunCraft</h1>
+<div class="container mt-2" id="app" v-cloak>
+    <h1 class="mb-3">Grade perso | FunCraft</h1>
 
-    <div class="btn-toolbar color-selectors mb-1" role="toolbar">
-        <div class="btn-group flex-wrap mr-2" role="group">
-            <button v-for="(name, code) in colors" @click="addColor(code)" type="button" class="btn btn-light" :title="name" data-toggle="tooltip">
-                <span class="color-selector" :class="'mc-background-' + code"></span>
-            </button>
+    <form @submit.prevent>
+        <div class="btn-toolbar color-selectors mb-1" role="toolbar">
+            <div class="btn-group flex-wrap mr-2" role="group">
+                <button v-for="(name, code) in colors" @click="addColor(code)" type="button" class="btn btn-light" :title="name" data-toggle="tooltip">
+                    <span class="color-selector" :class="'mc-background-' + code"></span>
+                </button>
+            </div>
+
+            <div class="btn-group mr-2" role="group">
+                <button @click="rainbowify" type="button" class="btn btn-light" title="Rainbow" data-toggle="tooltip">
+                    <span class="rainbow"></span>
+                </button>
+            </div>
+
+            <div class="btn-group" role="group">
+                <button @click="clearColors" type="button" class="btn btn-light text-danger" title="Effacer les couleurs" data-toggle="tooltip">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="2" y2="22"/>
+                        <line x1="2" y1="2" x2="22" y2="22"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="btn-group ml-auto" role="group">
+                <button @click.prevent="reset" type="reset" class="btn btn-danger" title="Réinitialiser titre + pseudo" data-toggle="tooltip">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="2" y2="22"/>
+                        <line x1="2" y1="2" x2="22" y2="22"/>
+                    </svg>
+                </button>
+            </div>
         </div>
 
-        <div class="btn-group mr-2" role="group">
-            <button @click="rainbowify" type="button" class="btn btn-light" title="Rainbow" data-toggle="tooltip">
-                <span class="rainbow"></span>
-            </button>
-        </div>
+        <div class="form-row">
+            <div class="col-md-7 mb-2">
+                <label for="prefix-input">Titre:</label>
+                <input id="prefix-input" ref="prefixInput" class="form-control" maxlength="30" placeholder="&dExemple&a" v-model.trim="title">
+            </div>
 
-        <div class="btn-group" role="group">
-            <button @click="clearColors" type="button" class="btn btn-light text-danger" title="Effacer les couleurs" data-toggle="tooltip">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="22" y1="2" x2="2" y2="22"/>
-                    <line x1="2" y1="2" x2="22" y2="22"/>
-                </svg>
-            </button>
+            <div class="col-md-5 mb-2">
+                <label for="name-input">Pseudo <small>(sans couleurs)</small>:</label>
+                <input id="name-input" class="form-control" maxlength="30" placeholder="Pseudo" v-model.trim="name">
+            </div>
         </div>
-    </div>
-
-    <div class="form mb-3">
-        <div class="form-group mb-1">
-            <label for="prefix-input">Titre:</label>
-            <input id="prefix-input" ref="prefixInput" class="form-control" maxlength="30" placeholder="&dExemple&a" v-model="title">
-        </div>
-        <div class="form-group">
-            <label for="name-input">Pseudo <small>(sans couleurs)</small>:</label>
-            <input id="name-input" class="form-control" maxlength="30" placeholder="Pseudo" v-model="name">
-        </div>
-    </div>
+    </form>
 
     <label for="preview">Aperçu en jeu:</label>
     <div id="preview" class="preview mb-3 px-3 py-2 rounded" v-html="titleRender"></div>
@@ -161,8 +173,8 @@
         Oups, il y a des couleurs en double dans le titre, mais ce n’est pas un problème elles ont automatiquement été retirées dans le résultat !
     </div>
 
-    <h2>Résultat:</h2>
-    <div class="input-group mb-3">
+    <h2 class="h3">Résultat:</h2>
+    <div class="input-group mb-2">
         <input id="result" ref="result" type="text" class="form-control" :value="titleResult" readonly>
         <div class="input-group-append">
             <button @click="copyResult" class="btn copy-clipboard" :class="validTitle ? 'btn-info' : 'btn-warning'" :disabled="!validTitle" id="copyResult" type="button" data-toggle="tooltip" data-copy-target="result" :title="validTitle ? 'Copier' : 'Le titre n\'est pas valide'">Copier</button>

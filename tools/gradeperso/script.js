@@ -27,11 +27,27 @@ function renderAsHtml(toRender) {
     return '<span class="mc-color-f">' + html + '</span>';
 }
 
+function parseTitleAndName() {
+    if (!window.location.hash) {
+        return null;
+    }
+
+    const split = decodeURI(window.location.hash.substring(1)).split('|');
+
+    if (split.length !== 2) {
+        return null;
+    }
+
+    return split;
+}
+
+const parsed = parseTitleAndName();
+
 const app = new Vue({
     el: '#app',
     data: {
-        title: '',
-        name: '',
+        title: parsed ? parsed[0] : '',
+        name: parsed ? parsed[1] : '',
         hasDuplicatesColor: false,
         colors: {
             // 1: 'Bleu foncé',
@@ -64,6 +80,8 @@ const app = new Vue({
 
                 this.title = title.replace(/§/g, '&');
             }
+
+            this.updateUrl();
         },
         stripedTitle() {
             this.validText = -1;
@@ -74,7 +92,7 @@ const app = new Vue({
 
             axios.get('https://mrmicky.fr/tools/gradeperso/result.php', {
                 params: {
-                    title: this.title,
+                    title: this.stripedTitle,
                 },
             }).then(function (response) {
                 if (response.data.allowed !== 'unknown') {
@@ -86,6 +104,8 @@ const app = new Vue({
         },
         name(name) {
             this.name = name.replace(/&[0-9a-f]/g, '');
+
+            this.updateUrl();
         },
     },
     computed: {
@@ -174,6 +194,13 @@ const app = new Vue({
         },
     },
     methods: {
+        updateUrl() {
+            if (!this.title && !this.name) {
+                window.location.replace('#');
+                return;
+            }
+            window.location.replace('#' + encodeURI(this.title + '|' + this.name));
+        },
         rainbowify() {
             const colors = ['4', 'c', '6', 'e', 'a', '2', 'b', '3', '5', 'd'];
             let res = '';
@@ -198,6 +225,10 @@ const app = new Vue({
                 }
             }
             return count;
+        },
+        reset() {
+            this.name = '';
+            this.title = '';
         },
         clearColors() {
             this.title = this.stripedTitle;

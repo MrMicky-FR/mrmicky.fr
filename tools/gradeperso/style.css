@@ -16,6 +16,10 @@
     z-index: 100;
 }
 
+.tooltip {
+    top: 0;
+}
+
 /* Minecraft font: https://github.com/South-Paw/Minecraft-Webfont-and-Colors */
 @font-face {
     font-family: 'Minecraft';
