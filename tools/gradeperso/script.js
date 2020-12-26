@@ -41,9 +41,21 @@ function parseTitleAndName() {
     return split;
 }
 
+const whitelist = [
+    'empereur', 'beaugosse', 'supreme', 'princesse', 'prince', 'ultra', 'dieux', 'lumiere', 'roi', 'ange', 'dieu',
+    'démon', 'puissance', 'élite', 'elite', 'légende', 'déesse', 'ninja',
+];
+
+const blacklist = [
+    'joueur', 'minivip', 'vip', 'superhéros', 'superheros', 'youtubeur', 'youtuber',
+    'helper', 'modo', 'moderateur', 'modérateur', 'supermodo', 'admin', 'fondateur', 'mvp',
+    'rouge', 'bleu', 'vert', 'jaune', 'violet', 'orange', 'bleue', 'cyan', 'blanc', 'noir', 'zombie', 'humain',
+    'vape', 'cheat', 'bypass', 'hack',
+];
+
 const parsed = parseTitleAndName();
 
-const app = new Vue({
+new Vue({
     el: '#app',
     data: {
         title: parsed ? parsed[0] : '',
@@ -90,17 +102,16 @@ const app = new Vue({
                 return;
             }
 
-            axios.get('https://mrmicky.fr/tools/gradeperso/result.php', {
-                params: {
-                    title: this.stripedTitle,
-                },
-            }).then(function (response) {
-                if (response.data.allowed !== 'unknown') {
-                    app.validText = response.data.allowed ? 1 : 0;
-                }
-            }).catch(function (error) {
-                console.error('Error with verification: ' + error);
-            });
+            const lowerTitle = this.stripedTitle.toLowerCase().replace(/\+/g, '');
+
+            if (whitelist.includes(lowerTitle)) {
+                this.validText = 1;
+                return;
+            }
+
+            if (blacklist.includes(lowerTitle)) {
+                this.validText = 0;
+            }
         },
         name(name) {
             this.name = name.replace(/&[0-9a-f]/g, '');
@@ -141,50 +152,44 @@ const app = new Vue({
                 return false;
             }
 
-            if (this.stripedTitle.indexOf('+') < 0) {
-                return true;
-            }
-
-            if (this.stripedTitle.indexOf('+++') >= 0) {
-                return false;
-            }
-
-            return (this.stripedTitle.indexOf('++') === this.stripedTitle.length - 2) || (this.stripedTitle.indexOf('+') === this.stripedTitle.length - 1);
+            return this.stripedTitle.substring(0, this.stripedTitle.length - 2).indexOf('+') < 0;
         },
         validColors() {
             if (this.lastColorCode === 'c' || this.lastColorCode === '4') {
                 return false;
             }
 
-            return this.title.length === 0 || (this.countCharsByColor('4') + this.countCharsByColor('c') < this.title.length / 2);
+            if (this.title.length === 0) {
+                return true;
+            }
+
+            return (this.countCharsByColor('4') + this.countCharsByColor('c')) <= this.stripedTitle.length / 2;
         },
         validTitle() {
             return this.validUpperCount && this.validLength && this.validColors && this.validChars && (this.validText !== 0);
         },
         titleResult() {
             let title = this.title;
-            let loop = true;
-            let lastColorCode = '';
-            let hasDuplicates = false;
+            let lastColorCode = null;
+            let loop;
 
-            while (loop) {
-                let continueLoop = false;
+            do {
+                loop = false;
 
-                for (let i = 0; i < title.length; i++) {
-                    if (title[i] === '&' && title.length > i + 1) {
-                        if ((title.length > i + 3 && title[i + 2] === '&') || lastColorCode === title[i + 1]) {
-                            hasDuplicates = true;
+                for (let i = 0; i < title.length - 1; i++) {
+                    if (title[i] === '&') {
+                        if (lastColorCode === title[i + 1]) {
                             title = title.substr(0, i) + title.substr(i + 2);
-                            continueLoop = true;
+                            loop = true;
+                            lastColorCode = null;
+                            this.hasDuplicatesColor = true;
                             break;
                         }
+
                         lastColorCode = title[i + 1];
                     }
                 }
-                loop = continueLoop;
-            }
-
-            this.hasDuplicatesColor = hasDuplicates;
+            } while (loop);
 
             if (title[0] !== '&') {
                 title = '&f' + title;
