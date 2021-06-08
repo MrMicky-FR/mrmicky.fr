@@ -53,33 +53,34 @@ const blacklist = [
     'vape', 'cheat', 'bypass', 'hack',
 ];
 
-const parsed = parseTitleAndName();
+Vue.createApp({
+    data() {
+        const parsed = parseTitleAndName();
 
-new Vue({
-    el: '#app',
-    data: {
-        title: parsed ? parsed[0] : '',
-        name: parsed ? parsed[1] : '',
-        hasDuplicatesColor: false,
-        colors: {
-            // 1: 'Bleu foncé',
-            2: 'Vert foncé',
-            3: 'Bleu turquoise',
-            4: 'Route foncé',
-            5: 'Violet',
-            6: 'Orange',
-            7: 'Gris clair',
-            8: 'Gris foncé',
-            9: 'Bleu royal',
-            // 0: 'Noir',
-            a: 'Vert clair',
-            b: 'Bleu clair',
-            c: 'Rouge clair',
-            d: 'Rose',
-            e: 'Jaune',
-            f: 'Blanc',
-        },
-        validText: -1,
+        return {
+            title: parsed ? parsed[0] : '',
+            name: parsed ? parsed[1] : '',
+            hasDuplicatesColor: false,
+            colors: {
+                // 1: 'Bleu foncé',
+                2: 'Vert foncé',
+                3: 'Bleu turquoise',
+                4: 'Route foncé',
+                5: 'Violet',
+                6: 'Orange',
+                7: 'Gris clair',
+                8: 'Gris foncé',
+                9: 'Bleu royal',
+                // 0: 'Noir',
+                a: 'Vert clair',
+                b: 'Bleu clair',
+                c: 'Rouge clair',
+                d: 'Rose',
+                e: 'Jaune',
+                f: 'Blanc',
+            },
+            validText: -1,
+        };
     },
     watch: {
         title(title) {
@@ -271,18 +272,20 @@ new Vue({
                 console.error(err);
             }
 
-            if ($ && $.fn.tooltip) {
-                const copyButton = $('#copyResult');
-                const oldTitle = copyButton.attr('data-original-title');
-                copyButton.attr('data-original-title', copied ? 'Copié !' : 'CTRL + C pour copier').tooltip('show');
-                copyButton.attr('data-original-title', oldTitle ? oldTitle : '');
-            }
+            const copyButton = document.getElementById('copyResult');
+            const oldTitle = copyButton.getAttribute('data-bs-original-title');
+
+            copyButton.setAttribute('data-bs-original-title', copied ? 'Copié !' : 'CTRL + C pour copier');
+            copyButton.tooltip.show();
+            copyButton.setAttribute('data-bs-original-title', oldTitle ? oldTitle : '');
         },
         badgeColor(valid) {
-            return valid ? 'badge-success' : 'badge-danger';
+            return valid ? 'bg-success' : 'bg-danger';
         },
     },
-});
+}).mount('#app');
 
 // Init tooltips
-$('[data-toggle="tooltip"]').tooltip();
+document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+    el.tooltip = new bootstrap.Tooltip(el);
+});
