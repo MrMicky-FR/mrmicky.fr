@@ -52,13 +52,13 @@
         <div class="btn-toolbar color-selectors mb-1" role="toolbar">
             <div class="btn-group flex-wrap me-2" role="group">
                 <button v-for="(name, code) in colors" @click="addColor(code)" type="button" class="btn btn-light" :title="name" data-bs-toggle="tooltip">
-                    <span class="color-selector" :class="'mc-background-' + code"></span>
+                    <span class="color-selector rounded" :class="'mc-background-' + code"></span>
                 </button>
             </div>
 
             <div class="btn-group me-2" role="group">
                 <button @click="rainbowify" type="button" class="btn btn-light" title="Rainbow" data-bs-toggle="tooltip">
-                    <span class="rainbow"></span>
+                    <span class="rainbow rounded"></span>
                 </button>
             </div>
 
@@ -83,12 +83,16 @@
 
         <div class="row g-3">
             <div class="col-md-7 mb-2">
-                <label for="prefix-input" class="form-label">Titre:</label>
+                <label for="prefix-input" class="form-label">
+                    Titre:
+                </label>
                 <input id="prefix-input" ref="prefixInput" class="form-control" maxlength="50" placeholder="&dExemple&a" v-model.trim="title">
             </div>
 
             <div class="col-md-5 mb-2">
-                <label for="name-input" class="form-label">Pseudo <small>(sans couleurs)</small>:</label>
+                <label for="name-input" class="form-label">
+                    Pseudo <small>(sans couleurs)</small>:
+                </label>
                 <input id="name-input" class="form-control" maxlength="30" placeholder="Pseudo" v-model.trim="name">
             </div>
         </div>
@@ -184,7 +188,9 @@
     <div class="input-group mb-2">
         <input id="result" ref="result" type="text" class="form-control" :value="titleResult" readonly>
 
-        <button @click="copyResult" class="btn copy-clipboard" :class="validTitle ? 'btn-primary' : 'btn-warning'" :disabled="!validTitle" id="copyResult" type="button" data-bs-toggle="tooltip" data-copy-target="result" :title="validTitle ? 'Copier' : 'Le titre n\'est pas valide'">Copier</button>
+        <button @click="copyResult" class="btn copy-clipboard" :class="validTitle ? 'btn-primary' : 'btn-warning'" :disabled="!validTitle" id="copyResult" type="button" data-bs-toggle="tooltip" data-copy-target="result" :title="validTitle ? 'Copier' : 'Le titre n\'est pas valide'">
+            Copier
+        </button>
     </div>
 
     <p>Réalisé par MrMicky avec la participation de SkyWarZzeur. Si vous rencontrez un problème, n’hésitez pas à nous le signaler.</p>
